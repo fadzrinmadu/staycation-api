@@ -1,0 +1,72 @@
+<div class="tab-pane fade" id="show-activity" role="tabpanel" aria-labelledby="show-activity-tab">
+  <!-- DataTables -->
+  <div class="card shadow mb-4 mt-2">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-5">
+          <form action="/admin/item/detail/add-activity" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+              <label for="name">Activity Name</label>
+              <input type="text" class="form-control" name="name" placeholder="Enter feature name" required>
+            </div>
+            <div class="form-group">
+              <label for="name">Type</label>
+              <input type="text" class="form-control" name="type" placeholder="Enter type" required>
+            </div>
+            <div class="form-group">
+              <label for="name">Image</label>
+              <input type="file" class="form-control" name="image" required>
+            </div>
+            <input type="hidden" name="itemId" value="<%= itemId %>">
+            <button type="submit" class="btn btn-primary">Add</button>
+          </form>
+        </div>
+        <div class="col-md-7">
+          <div class="table-responsive">
+            <table class="table table-bordered" id="dataTableActivity" width="100%" cellspacing="0">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Name</th>
+                  <th>Qty</th>
+                  <th>Image</th>
+                  <th class="text-center">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% activities.forEach((activity, index) => { %>
+                  <tr>
+                    <th><%= ++index %></th>
+                    <th><%= activity.name %></th>
+                    <th><%= activity.type %></th>
+                    <th>
+                      <img src="/<%= activity.imageUrl %>" alt="<%= activity.name %>" width="70">
+                    </th>
+                    <th class="text-center">
+                      <form action="/admin/item/detail/activity/<%= itemId %>/<%= activity._id %>?_method=DELETE" method="POST">
+                        <a href="#" class="btn btn-sm btn-warning btn-edit-activity mr-1" 
+                          data-toggle="modal" 
+                          data-target="#activityEditModal" 
+                          data-id="<%= activity._id %>" 
+                          data-name="<%= activity.name %>" 
+                          data-type="<%= activity.type %>"
+                        >
+                          <i class="fas fa-edit"></i>
+                        </a>
+                        <button type="submit" class="btn btn-sm btn-danger">
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </form>
+                    </th>
+                  </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End DataTables -->
+</div>
+

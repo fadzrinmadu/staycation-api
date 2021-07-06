@@ -1,0 +1,58 @@
+<!-- DataTables -->
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal">
+      <i class="fas fa-plus"></i>
+      <span>Add New Bank</span>
+    </button>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Bank Name</th>
+            <th>Account Number</th>
+            <th>Name</th>
+            <th>Image</th>
+            <th class="text-center">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% banks.forEach((bank, index) => { %>
+            <tr>
+              <td><%= ++index %></td>
+              <td><%= bank.bankName %></td>
+              <td><%= bank.accountNumber %></td>
+              <td><%= bank.name %></td>
+              <td>
+                <img src="/<%= bank.imageUrl %>" alt="<%= bank.bankName %>" width="70">
+              </td>
+              <td class="text-center">
+                <form action="/admin/bank/<%= bank.id %>?_method=DELETE" method="POST">
+                  <a 
+                    href="#" 
+                    class="btn btn-sm btn-warning btn-edit-bank mr-1" 
+                    data-toggle="modal" 
+                    data-target="#editModal" 
+                    data-id="<%= bank.id %>" 
+                    data-bank-name="<%= bank.bankName %>" 
+                    data-account-number="<%= bank.accountNumber %>" 
+                    data-name="<%= bank.name %>">
+                    <i class="fas fa-edit"></i>
+                  </a>
+                  <button type="submit" class="btn btn-sm btn-danger">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </form>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<!-- End DataTables -->
