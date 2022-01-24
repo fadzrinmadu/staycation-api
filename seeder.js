@@ -1,9 +1,11 @@
+require('dotenv').config();
+
 var seeder = require("mongoose-seed");
 var mongoose = require("mongoose");
 
 // Connect to MongoDB via Mongoose
 seeder.connect(
-  "mongodb://127.0.0.1:27017/staycation",
+  process.env.DB_URI,
   {
     useNewUrlParser: false,
     useCreateIndex: false,
