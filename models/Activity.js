@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Schema;
 
 const activitySchema = new mongoose.Schema({
@@ -16,13 +16,12 @@ const activitySchema = new mongoose.Schema({
   },
   isPopular: {
     type: Boolean,
+    default: false,
   },
   itemId: {
     type: ObjectId,
-    ref: 'Item',
+    ref: "Item",
   },
 });
 
-const Activity = mongoose.model('Activity', activitySchema);
-
-module.exports = Activity;
+module.exports = mongoose.model("Activity", activitySchema);

@@ -1,9 +1,9 @@
-const router =  require('express').Router();
-const authController = require('../controllers/authController');
+var express = require("express");
+var router = express.Router();
 
-router.get('/', authController.viewLogin);
-router.post('/', authController.actionLogin);
-
-router.get('/logout', authController.actionLogout);
+/* GET home page. */
+router.get("/", function (req, res, next) {
+  res.redirect("/admin/signin");
+});
 
 module.exports = router;

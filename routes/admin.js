@@ -1,46 +1,49 @@
-const router = require('express').Router();
-const adminController = require('../controllers/adminController');
-const { uploadSingle, uploadMultiple } = require('../middlewares/multer'); 
-const { isLogin } = require('../middlewares/auth');
+const router = require("express").Router();
+const HomeController = require("../controller/HomeController");
+const CategoryController = require("../controller/CategoryController");
+const BankController = require("../controller/BankController");
+const ItemController = require("../controller/ItemController");
+const FeatureController = require("../controller/FeatureController");
+const ActivityController = require("../controller/ActivityController");
+const BookingController = require("../controller/BookingController");
+const { uploadsingle, uploadMultiple } = require("../middlewares/Multer");
+const auth = require("../middlewares/Auth");
 
-router.use(isLogin);
-
-router.get('/', adminController.viewDashboard);
-router.get('/dashboard', adminController.viewDashboard);
-
+router.get("/signin", HomeController.signin);
+router.post("/login", HomeController.login);
+router.use(auth);
+router.get("/logout", HomeController.logout);
+router.get("/dashboard", HomeController.dashboard);
 // endpoint category
-router.get('/category', adminController.viewCategory);
-router.post('/category', adminController.addCategory);
-router.put('/category', adminController.editCategory);
-router.delete('/category/:id', adminController.deleteCategory);
-
-// endpoint Bank
-router.get('/bank', adminController.viewBank);
-router.post('/bank', uploadSingle, adminController.addBank);
-router.put('/bank', uploadSingle, adminController.editBank);
-router.delete('/bank/:id', adminController.deleteBank);
-
-// endpoint Item
-router.get('/item', adminController.viewItem);
-router.post('/item', uploadMultiple, adminController.addItem);
-router.get('/item/show-image/:id', adminController.showImageItem);
-router.get('/item/:id', adminController.showEditItem);
-router.put('/item/:id', uploadMultiple, adminController.editItem);
-router.delete('/item/:id', adminController.deleteItem);
-
-// endpoint Detail Item
-router.get('/item/detail/:itemId', adminController.viewDetailItem);
-router.post('/item/detail/add-feature', uploadSingle, adminController.addFeature);
-router.put('/item/detail/edit-feature', uploadSingle, adminController.editFeature);
-router.delete('/item/detail/feature/:itemId/:id', adminController.deleteFeature);
-
-router.post('/item/detail/add-activity', uploadSingle, adminController.addActivity);
-router.put('/item/detail/edit-activity', uploadSingle, adminController.editActivity);
-router.delete('/item/detail/activity/:itemId/:id', adminController.deleteActivity);
-
-router.get('/booking', adminController.viewBooking);
-router.get('/booking/:id', adminController.showDetailBooking);
-router.put('/booking/:id/confirmation', adminController.actionConfirmation);
-router.put('/booking/:id/reject', adminController.actionReject);
+router.get("/category", CategoryController.index);
+router.post("/category", CategoryController.create);
+router.put("/category", CategoryController.update);
+router.delete("/category/:id", CategoryController.delete);
+// endpoint bank
+router.get("/bank", BankController.index);
+router.post("/bank", uploadsingle, BankController.create);
+router.put("/bank", uploadsingle, BankController.update);
+router.delete("/bank/:id", BankController.delete);
+// endpoint item
+router.get("/item", ItemController.index);
+router.post("/item", uploadMultiple, ItemController.create);
+router.get("/item/show/:id", ItemController.showImage);
+router.get("/item/:id", ItemController.edit);
+router.put("/item/:id", uploadMultiple, ItemController.update);
+router.delete("/item/:id/delete", ItemController.delete);
+router.get("/item/detail/:itemId", ItemController.showDetail);
+// endpoint feature
+router.post("/item/add/feature", uploadsingle, FeatureController.create);
+router.put("/item/update/feature", uploadsingle, FeatureController.update);
+router.delete("/item/delete/:id/feature", FeatureController.delete);
+// endpoint activity
+router.post("/item/add/activity", uploadsingle, ActivityController.create);
+router.put("/item/update/activity", uploadsingle, ActivityController.update);
+router.delete("/item/delete/:id/activity", ActivityController.delete);
+// endpoint booking
+router.get("/booking", BookingController.index);
+router.get("/booking/:id", BookingController.show);
+router.put("/booking/:id/confirmation", BookingController.confirmation);
+router.put("/booking/:id/reject", BookingController.reject);
 
 module.exports = router;
