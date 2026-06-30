@@ -9,17 +9,12 @@ const methodOverride = require("method-override");
 const session = require("express-session");
 const flash = require("connect-flash");
 const cors = require("cors");
+
 // import mongoose
 const mongoose = require("mongoose");
-mongoose.connect(
-  process.env.DB_URI,
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-    useFindAndModify: false,
-  }
-);
+mongoose.connect(process.env.DB_URI, {
+  dbName: "db_staycation",  
+});
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
